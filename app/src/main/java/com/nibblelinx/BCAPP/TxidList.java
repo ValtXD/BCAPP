@@ -212,7 +212,7 @@ public class TxidList extends AppCompatActivity {
 
                 if (!banco.isAgain(Txid)) {
                     //banco.Update(Txid, Wallet);
-                    //banco.Update(Txid, myBSVaddress);
+                    //banco.Update(Txid, myBSVaddress);//
                     banco.Updatex(Txid, myBSVaddress);
                 }
 

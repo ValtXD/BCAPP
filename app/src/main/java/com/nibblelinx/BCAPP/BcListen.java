@@ -30,7 +30,7 @@ import java.util.TimerTask;
 //https://stackoverflow.com/questions/33229869/get-json-data-from-url-using-android
 
 public class BcListen extends AppCompatActivity {
-    //
+    //DADO
     ImageView iv_dice_p1, iv_dice_p2, iv_lives_p1, iv_lives_p2;
     TextView tv_player1, tv_player2;
 
@@ -102,218 +102,212 @@ public class BcListen extends AppCompatActivity {
 
         myURL = urlBaseAddress + myBSVaddress + "/history";
 
-        for(int i = 0; i < 1000; i++)
+        for (int i = 0; i < 1000; i++)
             txIDVector[i] = "";
 
         // A cada 5 segundos o sistema checa se tem algo novo no endereco informado
         timer.schedule(new TimeCheckURL(), 0, 5000);
 
+        //DADO
 
-        //dado
+        sendDataToBc("Teste 1 2 + SendCont: " + sendCont + 1);
 
-            //@Override
-            //protected void onCreate(Bundle savedInstanceState) {
-                    // super.onCreate(savedInstanceState);
-                //setContentView(R.layout.activity_txidlist);
+        r = new Random();
 
-                r = new Random();
+        animation = AnimationUtils.loadAnimation(this, R.anim.rotates);
 
-                animation = AnimationUtils.loadAnimation(this, R.anim.rotates);
+        iv_dice_p1 = findViewById(R.id.iv_dice_p1);
+        iv_dice_p2 = findViewById(R.id.iv_dice_p2);
 
-                iv_dice_p1 = findViewById(R.id.iv_dice_p1);
-                iv_dice_p2 = findViewById(R.id.iv_dice_p2);
+        iv_lives_p1 = findViewById(R.id.iv_lives_p1);
+        iv_lives_p2 = findViewById(R.id.iv_lives_p2);
 
-                iv_lives_p1 = findViewById(R.id.iv_lives_p1);
-                iv_lives_p2 = findViewById(R.id.iv_lives_p2);
+        tv_player1 = findViewById(R.id.tv_player1);
+        tv_player2 = findViewById(R.id.tv_player2);
 
-                tv_player1 = findViewById(R.id.tv_player1);
-                tv_player2 = findViewById(R.id.tv_player2);
+        tv_player1.setText("Jogador_1 Roll");
+        tv_player2.setText("Jogador_2 Roll");
 
-                tv_player1.setText("Jogador_1 Roll");
-                tv_player2.setText("Jogador_2 Roll");
+        //vidas esquerda
+        livesP1 = 6;
+        livesP2 = 6;
 
-                //vidas esquerda
-                livesP1 = 6;
-                livesP2 = 6;
+        setDiceImage(livesP1, iv_lives_p1);
+        setDiceImage(livesP2, iv_lives_p2);
 
-                setDiceImage(livesP1, iv_lives_p1);
-                setDiceImage(livesP2, iv_lives_p2);
+        iv_dice_p1.setOnClickListener(new View.OnClickListener() {
+            //girar o dado
+            @Override
+            public void onClick(View view) {
+                rolledP1 = r.nextInt(6) + 1;
+                setDiceImage(rolledP1, iv_dice_p1);
+                iv_dice_p1.startAnimation(animation);
 
-                iv_dice_p1.setOnClickListener(new View.OnClickListener() {
-                    //girar o dado
-                    @Override
-                    public void onClick(View view) {
-                        rolledP1 = r.nextInt(6) + 1;
-                        setDiceImage(rolledP1, iv_dice_p1);
-                        iv_dice_p1.startAnimation(animation);
+                //ver se o outro jogador rolou seus dados
+                if (rolledP2 != 0) {
+                    tv_player1.setText("Jogador_1 Roll");
+                    tv_player2.setText("Jogador_2 Roll");
 
-                        //ver se o outro jogador rolou seus dados
-                        if (rolledP2 != 0) {
-                            tv_player1.setText("Jogador_1 Roll");
-                            tv_player2.setText("Jogador_2 Roll");
+                    //decidindo o vencedor(calculo)
+                    if (rolledP1 > rolledP2) {
+                        livesP2--;
+                        setDiceImage(livesP2, iv_lives_p2);
 
-                            //decidindo o vencedor(calculo)
-                            if(rolledP1 > rolledP2){
-                                livesP2--;
-                                setDiceImage(livesP2, iv_lives_p2);
+                        Toast.makeText(BcListen.this, "Jogador_1 Venceu", Toast.LENGTH_SHORT).show();
+                    }
+                    if (rolledP2 > rolledP1) {
+                        livesP1--;
+                        setDiceImage(livesP1, iv_lives_p1);
 
-                                Toast.makeText(BcListen.this,"Jogador_1 Venceu", Toast.LENGTH_SHORT).show();
-                            }
-                            if(rolledP2 > rolledP1){
-                                livesP1--;
-                                setDiceImage(livesP1, iv_lives_p1);
-
-                                Toast.makeText(BcListen.this,"Jogador_2 Venceu", Toast.LENGTH_SHORT).show();
-                            }
-
-                            if(rolledP1 == rolledP2){
-                                Toast.makeText(BcListen.this,"Jogue", Toast.LENGTH_SHORT).show();
-                            }
-
-                            //inicializando os valores
-                            rolledP1 = 0;
-                            rolledP2 = 0;
-
-                            iv_dice_p1.setEnabled(true);
-                            iv_dice_p2.setEnabled(true);
-
-                            //verifique o jogador com 0 vidas restantes
-                            checkEndGame();
-
-                        }else{
-                            tv_player1.setText("Jogador_1 Rolled");
-                            iv_dice_p1.setEnabled(false);
-                        }
+                        Toast.makeText(BcListen.this, "Jogador_2 Venceu", Toast.LENGTH_SHORT).show();
                     }
 
-                });
-
-                iv_dice_p2.setOnClickListener(new View.OnClickListener() {
-                    //girar o dado
-                    @Override
-                    public void onClick(View view) {
-
-                        rolledP2 = r.nextInt(6)+1;
-                        setDiceImage(rolledP2, iv_dice_p2);
-                        iv_dice_p2.startAnimation(animation);
-
-                        //ver se o outro jogador rolou seus dados
-                        if (rolledP1 != 0) {
-
-                            tv_player1.setText("Jogador_1 Roll");
-                            tv_player2.setText("Jogador_2 Roll");
-
-                            //decidindo o vencedor(calculo)
-                            if(rolledP1 > rolledP2){
-                                livesP2--;
-                                setDiceImage(livesP2, iv_lives_p2);
-
-                                Toast.makeText(BcListen.this,"Jogador_1 Venceu", Toast.LENGTH_SHORT).show();
-                            }
-                            if(rolledP2 > rolledP1){
-                                livesP1--;
-                                setDiceImage(livesP1, iv_lives_p1);
-
-                                Toast.makeText(BcListen.this,"Jogador_2 Venceu", Toast.LENGTH_SHORT).show();
-                            }
-
-                            if(rolledP1 == rolledP2){
-                                Toast.makeText(BcListen.this,"Jogue", Toast.LENGTH_SHORT).show();
-                            }
-
-                            //valor inicial
-                            rolledP1 = 0;
-                            rolledP2 = 0;
-
-                            iv_dice_p1.setEnabled(true);
-                            iv_dice_p2.setEnabled(true);
-
-                            //verifique o jogador com 0 vidas restantes
-                            checkEndGame();
-
-                        }else{
-                            tv_player2.setText("Jogador_2 Rolled");
-
-                            iv_dice_p2.setEnabled(false);
-                        }
-
+                    if (rolledP1 == rolledP2) {
+                        Toast.makeText(BcListen.this, "Jogue", Toast.LENGTH_SHORT).show();
                     }
-                });
-            }
 
-            //mostrar imagem de dados de acordo com o número
-            private void setDiceImage(int dice, ImageView image){
-                switch (dice){
-                    case 1:
-                        image.setImageResource(R.drawable.um);
-                        break;
+                    //inicializando os valores
+                    rolledP1 = 0;
+                    rolledP2 = 0;
 
+                    iv_dice_p1.setEnabled(true);
+                    iv_dice_p2.setEnabled(true);
 
-                    case 2:
-                        image.setImageResource(R.drawable.dois);
-                        break;
+                    //verifique o jogador com 0 vidas restantes
+                    checkEndGame();
 
-
-                    case 3:
-                        image.setImageResource(R.drawable.tres);
-                        break;
-
-
-                    case 4:
-                        image.setImageResource(R.drawable.quatro);
-                        break;
-
-
-                    case 5:
-                        image.setImageResource(R.drawable.cinco);
-                        break;
-
-
-                    case 6:
-                        image.setImageResource(R.drawable.seis);
-                        break;
-
-
-                    default:
-                        image.setImageResource(R.drawable.zero);
-                }
-            }
-
-            //mostrar fim do game_dialogo
-            private void checkEndGame(){
-                String text = "";
-                if(livesP1 == 0 || livesP2 == 0){
+                } else {
+                    tv_player1.setText("Jogador_1 Rolled");
                     iv_dice_p1.setEnabled(false);
-                    iv_dice_p2.setEnabled(false);
-
-                    if(livesP1 != 0){
-                        text = "Fim de Jogo, Jogador_2 Venceu";
-                    }
-                    if(livesP2 != 0){
-                        text = "Fim de Jogo, Jogador_1 Venceu";
-                    }
-
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                    alertDialogBuilder.setCancelable(false);
-                    alertDialogBuilder.setMessage(text);
-                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            finish();
-                        }
-                    });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
                 }
             }
 
+        });
 
-        //
+        iv_dice_p2.setOnClickListener(new View.OnClickListener() {
+            //girar o dado
+            @Override
+            public void onClick(View view) {
+
+                rolledP2 = r.nextInt(6) + 1;
+                setDiceImage(rolledP2, iv_dice_p2);
+                iv_dice_p2.startAnimation(animation);
+
+                //ver se o outro jogador rolou seus dados
+                if (rolledP1 != 0) {
+
+                    tv_player1.setText("Jogador_1 Roll");
+                    tv_player2.setText("Jogador_2 Roll");
+
+                    //decidindo o vencedor(calculo)
+                    if (rolledP1 > rolledP2) {
+                        livesP2--;
+                        setDiceImage(livesP2, iv_lives_p2);
+
+                        Toast.makeText(BcListen.this, "Jogador_1 Venceu", Toast.LENGTH_SHORT).show();
+                    }
+                    if (rolledP2 > rolledP1) {
+                        livesP1--;
+                        setDiceImage(livesP1, iv_lives_p1);
+
+                        Toast.makeText(BcListen.this, "Jogador_2 Venceu", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if (rolledP1 == rolledP2) {
+                        Toast.makeText(BcListen.this, "Jogue", Toast.LENGTH_SHORT).show();
+                    }
+
+                    //valor inicial
+                    rolledP1 = 0;
+                    rolledP2 = 0;
+
+                    iv_dice_p1.setEnabled(true);
+                    iv_dice_p2.setEnabled(true);
+
+                    //verifique o jogador com 0 vidas restantes
+                    checkEndGame();
+
+                } else {
+                    tv_player2.setText("Jogador_2 Rolled");
+
+                    iv_dice_p2.setEnabled(false);
+                }
+
+            }
+        });
+    }
+
+    //mostrar imagem de dados de acordo com o número
+    private void setDiceImage(int dice, ImageView image) {
+        switch (dice) {
+            case 1:
+                image.setImageResource(R.drawable.um);
+                break;
+
+
+            case 2:
+                image.setImageResource(R.drawable.dois);
+                break;
+
+
+            case 3:
+                image.setImageResource(R.drawable.tres);
+                break;
+
+
+            case 4:
+                image.setImageResource(R.drawable.quatro);
+                break;
+
+
+            case 5:
+                image.setImageResource(R.drawable.cinco);
+                break;
+
+
+            case 6:
+                image.setImageResource(R.drawable.seis);
+                break;
+
+
+            default:
+                image.setImageResource(R.drawable.zero);
+        }
+    }
+
+
+    //mostrar fim do game_dialogo
+    //sendDataToBc("Teste 1 2 + SendCont: " + sendCont + 1)
+    private void checkEndGame() {
+    String text = "";
+    if (livesP1 == 0 || livesP2 == 0) {
+    iv_dice_p1.setEnabled(false);
+    iv_dice_p2.setEnabled(false);
+
+    if (livesP1 != 0) {
+     text = "Fim de Jogo, Jogador_2 Venceu";
+     }
+    if (livesP2 != 0) {
+     text = "Fim de Jogo, Jogador_1 Venceu";
+    }
+
+    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+    alertDialogBuilder.setCancelable(false);
+    alertDialogBuilder.setMessage(text);
+    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+     @Override
+     public void onClick(DialogInterface dialogInterface, int i) {
+    finish();
+      }
+      });
+     AlertDialog alertDialog = alertDialogBuilder.create();
+      alertDialog.show();
+     }
+    }
 
     //public BcDataSend sendData;
 
-    private void sendDataToBc (String dataToSend)
-    {
+    private void sendDataToBc(String dataToSend) {
         BcDataSend sendData = new BcDataSend();
         String result = sendData.dataSend(dataToSend);
 
@@ -327,26 +321,23 @@ public class BcListen extends AppCompatActivity {
 
     //int runTurn = 0;
 
-    private void addNewData (String newData)
-    {
+    private void addNewData(String newData) {
         dataOR = newData;
         //Toast.makeText(this, newData, Toast.LENGTH_LONG).show();
 
-        if(lastDataOR.compareTo(dataOR) != 0) {
+        if (lastDataOR.compareTo(dataOR) != 0) {
             Toast.makeText(this, newData, Toast.LENGTH_LONG).show();
             lastDataOR = dataOR;
 
             /////////////////////////////////////////
             /////////////////////////////////////////
-            if(sendCont == 0)
-            {
+            if (sendCont == 0) {
                 //sendDataToBc("Teste 1 2 + SendCont: " + sendCont + 1);
                 sendCont++;
             }
             /////////////////////////////////////////
             /////////////////////////////////////////
         }
-
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1046,6 +1037,7 @@ public class BcListen extends AppCompatActivity {
         //((EditText) findViewById(R.id.ET_TEXTOROR2)).setText(text);
         //Toast.makeText(this, text, Toast.LENGTH_LONG).show();
         addNewData (text);
+
 
     }
 
