@@ -110,7 +110,8 @@ public class BcListen extends AppCompatActivity {
 
         //DADO
 
-        sendDataToBc("Teste 1 2 + SendCont: " + sendCont + 1);
+        //sendDataToBc(text);
+        //sendDataToBc("Teste 1 2 + SendCont: " + sendCont + 1);
 
         r = new Random();
 
@@ -277,23 +278,26 @@ public class BcListen extends AppCompatActivity {
 
 
     //mostrar fim do game_dialogo
-    //sendDataToBc("Teste 1 2 + SendCont: " + sendCont + 1)
+
     private void checkEndGame() {
-    String text = "";
+    //String text = "";
+    String DADO ="";
+
     if (livesP1 == 0 || livesP2 == 0) {
     iv_dice_p1.setEnabled(false);
     iv_dice_p2.setEnabled(false);
 
     if (livesP1 != 0) {
-     text = "Fim de Jogo, Jogador_2 Venceu";
+     DADO = "Fim de Jogo, Jogador_2 Venceu";
      }
     if (livesP2 != 0) {
-     text = "Fim de Jogo, Jogador_1 Venceu";
+     DADO = "Fim de Jogo, Jogador_1 Venceu";
     }
+    sendDataToBc(DADO);
 
     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
     alertDialogBuilder.setCancelable(false);
-    alertDialogBuilder.setMessage(text);
+    alertDialogBuilder.setMessage(DADO);
     alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
      @Override
      public void onClick(DialogInterface dialogInterface, int i) {
@@ -619,7 +623,8 @@ public class BcListen extends AppCompatActivity {
                 //lastDataOR = dataOR;
                 //dataRead(Txid);
 
-                Toast.makeText(BcListen.this, "Last TXID: " + txIDVector[numberOfTxid-1], Toast.LENGTH_SHORT).show();
+                //Local do TXID (Debug) - (Retomada)
+                //Toast.makeText(BcListen.this, "Last TXID: " + txIDVector[numberOfTxid-1], Toast.LENGTH_SHORT).show();
 
                 dataRead(txIDVector[numberOfTxid-1]);
 
