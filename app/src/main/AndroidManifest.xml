@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.nibblelinx.BCAPP">
+    package="com.nibblelinx.BCAPP">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-<!-- como mudar os nomes dos modulos do projeto:
-    https://stackoverflow.com/questions/21177495/renaming-a-project-in-intellij-idea
+    <!-- como mudar os nomes dos modulos do projeto:
+        https://stackoverflow.com/questions/21177495/renaming-a-project-in-intellij-idea
 
-https://stackoverflow.com/questions/12131025/android-preventing-webview-reload-on-rotate
-    android:configChanges="orientation|screenSize"
+    https://stackoverflow.com/questions/12131025/android-preventing-webview-reload-on-rotate
+        android:configChanges="orientation|screenSize"
 
-    -->
+        -->
 
 
     <application
-            android:allowBackup="true"
+        android:allowBackup="true"
 
-            android:icon="@mipmap/ic_launcher"
-            android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
 
-            android:label="@string/app_name"
+        android:label="@string/app_name"
 
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            android:usesCleartextTraffic="true"
-            android:hardwareAccelerated="true"
-            android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true"
+        android:requestLegacyExternalStorage="true"
 
 
-            android:configChanges="orientation|screenSize"
+        android:configChanges="orientation|screenSize"
 
-            android:largeHeap="true"
-    >
+        android:largeHeap="true"
+        >
 
         <!-- LARGE FILES android:largeHeap="true"
         https://stackoverflow.com/questions/32244851/androidjava-lang-outofmemoryerror-failed-to-allocate-a-23970828-byte-allocatio
@@ -51,9 +51,9 @@ https://stackoverflow.com/questions/12131025/android-preventing-webview-reload-o
 
 
         <activity
-                android:name="com.nibblelinx.BCAPP.MainBCAPP"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar">
+            android:name="com.nibblelinx.BCAPP.MainBCAPP"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -85,33 +85,33 @@ https://stackoverflow.com/questions/12131025/android-preventing-webview-reload-o
         -->
 
         <activity
-                android:name="com.nibblelinx.BCAPP.TxidList"
-                android:label="@string/app_name"/>
-           <!--     android:theme="@style/AppTheme.NoActionBar"-->
+            android:name="com.nibblelinx.BCAPP.TxidList"
+            android:label="@string/app_name"/>
+        <!--     android:theme="@style/AppTheme.NoActionBar"-->
 
 
         <activity
-                android:name="com.nibblelinx.BCAPP.NFTText"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar"/>
+            android:name="com.nibblelinx.BCAPP.NFTText"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name="com.nibblelinx.BCAPP.NFTOPReturn"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar"/>
+            android:name="com.nibblelinx.BCAPP.NFTOPReturn"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-                android:name="com.nibblelinx.BCAPP.Token"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar"/>
+            android:name="com.nibblelinx.BCAPP.Token"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name="com.nibblelinx.BCAPP.TxVerify"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar"/>
+            android:name="com.nibblelinx.BCAPP.TxVerify"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-                android:name="com.nibblelinx.BCAPP.BcListen"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar"/>
+            android:name="com.nibblelinx.BCAPP.BcListen"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
 
 

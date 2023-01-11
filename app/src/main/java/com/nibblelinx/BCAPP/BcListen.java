@@ -336,7 +336,7 @@ public class BcListen extends AppCompatActivity {
             /////////////////////////////////////////
             /////////////////////////////////////////
             if (sendCont == 0) {
-                //sendDataToBc("Teste 1 2 + SendCont: " + sendCont + 1);
+                sendDataToBc("User: Y Rodada X, Face do Dado: 7 Teste 1 2 + SendCont: " + sendCont + 1); //(comentar aqui)
                 sendCont++;
             }
             /////////////////////////////////////////
