@@ -38,6 +38,7 @@ public class BcListen extends AppCompatActivity {
 
     int livesP1, livesP2;
     int rolledP1, rolledP2;
+    int rollResult;
 
     Animation animation;
 
@@ -78,6 +79,8 @@ public class BcListen extends AppCompatActivity {
 
     //https://stackoverflow.com/questions/10379134/finish-an-activity-from-another-activity
     public static Activity fa;
+    ////////
+    Boolean Jogador1 = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,10 +144,15 @@ public class BcListen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 rolledP1 = r.nextInt(6) + 1;
+
+                rollResult = rolledP1;
                 setDiceImage(rolledP1, iv_dice_p1);
                 iv_dice_p1.startAnimation(animation);
 
+                Jogador1 = true;
+
                 //ver se o outro jogador rolou seus dados
+
                 if (rolledP2 != 0) {
                     tv_player1.setText("Jogador_1 Roll");
                     tv_player2.setText("Jogador_2 Roll");
@@ -191,8 +199,13 @@ public class BcListen extends AppCompatActivity {
             public void onClick(View view) {
 
                 rolledP2 = r.nextInt(6) + 1;
+
+                rollResult = rolledP2;
+
                 setDiceImage(rolledP2, iv_dice_p2);
                 iv_dice_p2.startAnimation(animation);
+
+                Jogador1 = false;
 
                 //ver se o outro jogador rolou seus dados
                 if (rolledP1 != 0) {
@@ -284,29 +297,40 @@ public class BcListen extends AppCompatActivity {
     String DADO ="";
 
     if (livesP1 == 0 || livesP2 == 0) {
-    iv_dice_p1.setEnabled(false);
-    iv_dice_p2.setEnabled(false);
+        iv_dice_p1.setEnabled(false);
+        iv_dice_p2.setEnabled(false);
 
-    if (livesP1 != 0) {
-     DADO = "Fim de Jogo, Jogador_2 Venceu";
+        if (livesP1 != 0) {
+         DADO = "Fim de Jogo, Jogador_2 Venceu";
+         }
+        if (livesP2 != 0) {
+         DADO = "Fim de Jogo, Jogador_1 Venceu";
+        }
+        sendDataToBc(DADO);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setMessage(DADO);
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+         @Override
+         public void onClick(DialogInterface dialogInterface, int i) {
+        finish();
+          }
+          });
+         AlertDialog alertDialog = alertDialogBuilder.create();
+          alertDialog.show();
      }
-    if (livesP2 != 0) {
-     DADO = "Fim de Jogo, Jogador_1 Venceu";
+    //////////modificação
+    else{
+        if (Jogador1) {
+            DADO = "Jogador1: " + rollResult;
+
+        }else{
+            DADO = "Jogador2: " + rollResult;
+
+        }
+        sendDataToBc(DADO);
     }
-    sendDataToBc(DADO);
-
-    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-    alertDialogBuilder.setCancelable(false);
-    alertDialogBuilder.setMessage(DADO);
-    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-     @Override
-     public void onClick(DialogInterface dialogInterface, int i) {
-    finish();
-      }
-      });
-     AlertDialog alertDialog = alertDialogBuilder.create();
-      alertDialog.show();
-     }
     }
 
     //public BcDataSend sendData;
@@ -335,10 +359,10 @@ public class BcListen extends AppCompatActivity {
 
             /////////////////////////////////////////
             /////////////////////////////////////////
-            if (sendCont == 0) {
-                sendDataToBc("User: Y Rodada X, Face do Dado: 7 Teste 1 2 + SendCont: " + sendCont + 1); //(comentar aqui)
-                sendCont++;
-            }
+            //if (sendCont == 0) {
+                //sendDataToBc("User: Y Rodada X, Face do Dado: 7 Teste 1 2 + SendCont: " + sendCont + 1); //(comentar aqui)
+                //sendCont++;
+            //}
             /////////////////////////////////////////
             /////////////////////////////////////////
         }
